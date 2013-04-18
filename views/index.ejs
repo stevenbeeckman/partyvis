@@ -23,7 +23,8 @@
 				setInterval(function(){ tick () }, 5000);
 			});
 
-			var newsticker = io.connect('http://localhost/newsticker');
+			var newsticker = io.connect('http://http://secure-sea-3837.herokuapp.com/newsticker');
+			//var newsticker = io.connect('http://http://localhost/newsticker');
 
 			newsticker.on('connect', function(){
 				console.log("Connected to the news ticker data stream.");
