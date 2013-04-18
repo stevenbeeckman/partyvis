@@ -80,8 +80,8 @@ function startServer(){
 	twit.stream('statuses/filter', { track: ['#nvdj', '#nvdj13', '#nvdj2013'] }, function(stream) {
 
 		stream.on('data', function (data) {
-			//console.log("This is the data we received from the Twitter stream:");
-			//console.dir(data);
+			console.log("This is the data we received from the Twitter stream:");
+			console.dir(data);
 			//console.log("These are the entities:");
 			//console.dir(data.entities);
 			//console.log("These are the hashtags in the tweet:");
