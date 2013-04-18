@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Party Visualisations</title>
+		<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css' />
+		<link rel="stylesheet" href="/css/rickshaw.min.css"/>
+		<script src="/js/jquery-1.9.1.min.js"></script>
+		<script src="/js/d3.v2.js"></script>
+		<script src="/js/rickshaw.min.js"></script>
+		<script src="/js/three.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var camera, scene, renderer;
+    		var geometry, material, mesh;
+
+			var newsticker_items = new Array();
+			var counter = 0;
+
+			$(document).ready(function(){
+				//init();
+    			//animate();
+				setInterval(function(){ tick () }, 5000);
+			});
+
+			var newsticker = io.connect('http://localhost/newsticker');
+
+			newsticker.on('connect', function(){
+				console.log("Connected to the news ticker data stream.");
+				newsticker.emit("Connected to the news ticker data stream.");
+			});
+
+			newsticker.on('tweet', function(data){
+				console.dir(data.value);
+				newsticker_items.push(data.value);
+				/*$("#newsticker").html("<img src='" + data.value.user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + data.value.user.screen_name + ":</b> " + data.value.text);*/
+			});
+
+		    function init() {
+
+		        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+		        camera.position.z = 1000;
+
+		        scene = new THREE.Scene();
+
+		        geometry = new THREE.CubeGeometry( 200, 200, 200 );
+		        material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+
+		        mesh = new THREE.Mesh( geometry, material );
+		        scene.add( mesh );
+
+		        renderer = new THREE.CanvasRenderer();
+		        renderer.setSize( window.innerWidth, window.innerHeight );
+
+		        //document.body.appendChild( renderer.domElement );
+		        $('#background').html(renderer.domElement);
+
+		    }
+
+		    function animate() {
+
+		        // note: three.js includes requestAnimationFrame shim
+		        requestAnimationFrame( animate );
+
+		        mesh.rotation.x += 0.01;
+		        mesh.rotation.y += 0.02;
+
+		        renderer.render( scene, camera );
+
+		    }
+			
+			function tick(){
+				if(newsticker_items.length > 0){
+					$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
+					counter++;
+					if(counter >= newsticker_items.length){
+						counter = 0;
+					}
+				}
+				
+			}
+			
+			
+
+		</script>
+	</head>
+	<body style="background-color: black;">
+		<div class="row" style="position: fixed; top: 0px; height: 4em; background-color: black; color: white; width: 100%; z-index: 1001;">
+			<center>
+				<h2>Use hashtags #nvdj, #nvdj13 or #nvdj2013 to get on this tweet wall.</h2>
+			</center>
+		</div>
+		<center>
+			<iframe width="1024" height="576" src="http://www.youtube.com/embed/videoseries?list=PL1HWwsLsElPbBhaTVJJ-isI-J25pyUDwM&autoplay=1&controls=0&modestbranding=0" frameborder="0" allowfullscreen></iframe>
+		</center>
+		<!--<div class="container-fluid" id="background">
+			<div class="hero-unit" style="height: 4em;">
+				<h1>Party visualisations</h1>
+				<p>You should see tweets moving below.</p>
+			</div>
+			
+
+		</div>-->
+		<div class="row" style="position: fixed; bottom: 80px; background-color: black; color: white; width: 100%; z-index: 1000;">
+			<div class="span10" id="newsticker" style="margin-left: 80px;">
+			</div>
+		</div>
+	</body>
+</html>

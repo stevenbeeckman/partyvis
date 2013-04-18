@@ -1,0 +1,18 @@
+{
+  "name": "partyvis",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.0rc5",
+    "ejs": "*",
+    "socket.io": "0.9.13",
+    "ntwitter": "0.5.0"
+  },
+  "engines": {
+        "node": ">= 0.6.19",
+        "npm": ">= 1.1.24"
+  }
+}
