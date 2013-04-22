@@ -93,15 +93,19 @@ function startServer(){
 			tweet.created_at = data.created_at;
 			tweet.id_str = data.id_str;
 			tweet.text = data.text;
-			tweet.user = new Object();
-			tweet.user.name = data.user.name;
-			tweet.user.screen_name = data.user.screen_name;
-			tweet.user.profile_image_url = data.user.profile_image_url;
-			tweet.user.profile_image_url_https = data.user.profile_image_url_https;
-			tweet.entities = data.entities;
-			console.log("This is the tweet we're sending to the news ticker:");
-			console.dir(tweet);
-			newsticker.emit('tweet', {value: tweet});
+			if(typeof data.user != "undefined" && typeof data.entities != "undefined"){
+				tweet.user = new Object();
+				tweet.user.name = data.user.name;
+				tweet.user.screen_name = data.user.screen_name;
+				tweet.user.profile_image_url = data.user.profile_image_url;
+				tweet.user.profile_image_url_https = data.user.profile_image_url_https;
+				tweet.entities = data.entities;
+				console.log("This is the tweet we're sending to the news ticker:");
+				console.dir(tweet);
+				newsticker.emit('tweet', {value: tweet});
+			}
+			
+			
 		});
 	});
 }
