@@ -71,9 +71,9 @@
 			
 			function tick(){
 				if(newsticker_items.length > 0){
-					$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
+					$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text).fade();
 					if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
-						$("#imgdiv").html("<img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/>");
+						$("#imgdiv").html("<img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/>").fadeIn();
 					}else{
 						$("#imgdiv").html("");
 					}
@@ -110,7 +110,7 @@
 			<div class="span10" id="newsticker" style="margin-left: 80px;">
 			</div>
 		</div>
-		<div id="imgdiv" style="position: fixed; top: 4em; left: 50px; background-color: rgba(0, 0, 0, 0); z-index: 900;">
+		<div id="imgdiv" style="position: fixed; top: 5em; left:110px; background-color: rgba(0, 0, 0, 0); z-index: 900;">
 		</div>
 	</body>
 </html>
