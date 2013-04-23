@@ -21,7 +21,7 @@
 				//init();
     			//animate();
 				setInterval(function(){ tick () }, 5000); // update news ticker every 5 seconds
-				setInterval(function(){ updateInstagram()}, 120000); // insert instagram pics in news ticker
+				setInterval(function(){ updateInstagram()}, 5000); // insert instagram pics in news ticker
 			});
 
 			var newsticker = io.connect('http://secure-sea-3837.herokuapp.com/newsticker');
@@ -107,7 +107,7 @@
 							console.log("Picture " + p);
 							console.log(photo);
 							var alreadySaved = false;
-							for(int = 0; i < instagrams.length && !alreadySaved; i++){
+							for(var i = 0; i < instagrams.length && !alreadySaved; i++){
 								if(instagrams[i].id == photo.id){
 									alreadySaved = true;
 								}
