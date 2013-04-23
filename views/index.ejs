@@ -104,18 +104,19 @@
 			
 			function searchInstagram(searchTag) {
 				$.getJSON("https://api.instagram.com/v1/tags/" + searchTag + "/media/recent?callback=?", {client_id: "2c58eb67c7ce4cc0aefd33c9baef0962"}, function(data) {
-						console.log("searching Instagram for " + searchTag);
-						console.log(data.data);
+						//console.log("searching Instagram for " + searchTag);
+						//console.log(data.data);
 						$.each(data.data, function(p, photo){
-							console.log("Picture " + p);
-							console.log(photo);
+							//console.log("Picture " + p);
+							//console.log(photo);
 							var alreadySaved = false;
 							for(var i = 0; i < instagrams.length && !alreadySaved; i++){
-								if(instagrams[i].id == photo.id && parseInt(photo.created_time) > 1363755600){
+								if(instagrams[i].id == photo.id && parseInt(photo.created_time) > 1366808400){
 									alreadySaved = true;
 								}
 							}
 							if(alreadySaved == false){
+								console.dir(photo);
 								newsticker_items.push(photo);
 							}
 						});
