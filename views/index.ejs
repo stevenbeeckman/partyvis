@@ -110,6 +110,7 @@
 							//console.log("Picture " + p);
 							//console.log(photo);
 							var alreadySaved = false;
+							console.log(alreadySaved + " " + photo.created_time + " < 1366808400");
 							for(var i = 0; i < instagrams.length && !alreadySaved; i++){
 								if(instagrams[i].id == photo.id && parseInt(photo.created_time) > 1366808400){
 									alreadySaved = true;
