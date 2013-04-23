@@ -14,12 +14,14 @@
     		var geometry, material, mesh;
 
 			var newsticker_items = new Array();
+			var instagrams = new Array();
 			var counter = 0;
 
 			$(document).ready(function(){
 				//init();
     			//animate();
-				setInterval(function(){ tick () }, 5000);
+				setInterval(function(){ tick () }, 5000); // update news ticker every 5 seconds
+				setInterval(function(){ updateInstagram()}, 120000); // insert instagram pics in news ticker
 			});
 
 			var newsticker = io.connect('http://secure-sea-3837.herokuapp.com/newsticker');
@@ -71,12 +73,18 @@
 			
 			function tick(){
 				if(newsticker_items.length > 0){
-					$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text).fadeIn();
-					if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
-						$("#imgdiv").html("<img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/>").fadeIn();
-					}else{
-						$("#imgdiv").html("");
+					if(newsticker_items[counter].type == "tweet"){
+						$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
+						if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
+							$("#imgdiv").html("<img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/>");
+						}else{
+							$("#imgdiv").html("");
+						}
+					}else if(newsticker_items[counter].type == "image"){ //instagram
+						$("#newsticker").html("<img src='" + newsticker_items[counter].caption.profile_picture + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].caption.username + ":</b> " + newsticker_items[counter].caption.text);
+						$("#imgdiv").html("<img src='" + newsticker_items[counter].images.standard_resolution.url + "'/>");
 					}
+					
 					counter++;
 					if(counter >= newsticker_items.length){
 						counter = 0;
@@ -84,7 +92,33 @@
 				}
 				
 			}
+
+			function updateInstagram(){
+				searchInstagram("nvdj13");
+				searchInstagram("nvdj2013");
+				searchInstagram("nvdj");
+			}
 			
+			function searchInstagram(searchTag) {
+				$.getJSON("https://api.instagram.com/v1/tags/" + searchTag + "/media/recent?callback=?", {client_id: "2c58eb67c7ce4cc0aefd33c9baef0962"}, function(data) {
+						console.log("searching Instagram for " + searchTag);
+						console.log(data.data);
+						$.each(data.data, function(p, photo){
+							console.log("Picture " + p);
+							console.log(photo);
+							var alreadySaved = false;
+							for(int = 0; i < instagrams.length && !alreadySaved; i++){
+								if(instagrams[i].id == photo.id){
+									alreadySaved = true;
+								}
+							}
+							if(alreadySaved){
+								newsticker_items.push(photo);
+							}
+						});
+					}
+				);
+			}
 			
 
 		</script>

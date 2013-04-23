@@ -93,6 +93,7 @@ function startServer(){
 			tweet.created_at = data.created_at;
 			tweet.id_str = data.id_str;
 			tweet.text = data.text;
+			tweet.type = "tweet";
 			if(typeof data.user != "undefined" && typeof data.entities != "undefined"){
 				tweet.user = new Object();
 				tweet.user.name = data.user.name;
