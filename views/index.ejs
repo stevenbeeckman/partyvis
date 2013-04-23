@@ -74,16 +74,16 @@
 			
 			function tick(){
 				if(newsticker_items.length > 0){
-					console.dir(newsticker_items[counter]);
+					//console.dir(newsticker_items[counter]);
 					if(newsticker_items[counter].type == "tweet"){
 						$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
 						if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
-							$("#imgdiv").html("<img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/>");
+							$("#imgdiv").html("<center><img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/></center>");
 						}else{
 							$("#imgdiv").html("");
 						}
 					}else if(newsticker_items[counter].type == "image"){ //instagram
-						console.log("Showing an Instagram.")
+						//console.log("Showing an Instagram.")
 						$("#newsticker").html("<img src='" + newsticker_items[counter].caption.from.profile_picture + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].caption.from.username + ":</b> " + newsticker_items[counter].caption.text);
 						$("#imgdiv").html("<center><img src='" + newsticker_items[counter].images.standard_resolution.url + "'/></center>");
 					}
@@ -110,14 +110,14 @@
 							//console.log("Picture " + p);
 							//console.log(photo);
 							var alreadySaved = false;
-							console.log(alreadySaved + " " + photo.created_time + " < 1366808400");
+							//console.log(alreadySaved + " " + photo.created_time + " < 1366808400");
 							for(var i = 0; i < instagrams.length && !alreadySaved; i++){
 								if(instagrams[i].id == photo.id){
 									alreadySaved = true;
 								}
 							}
-							if(alreadySaved == false && parseInt(photo.created_time) > 1366808400){
-								console.dir(photo);
+							if(alreadySaved == false /*&& parseInt(photo.created_time) > 1366808400*/){
+								//console.dir(photo);
 								newsticker_items.push(photo);
 							}
 						});
