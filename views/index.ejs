@@ -21,7 +21,8 @@
 				//init();
     			//animate();
 				setInterval(function(){ tick () }, 5000); // update news ticker every 5 seconds
-				setInterval(function(){ updateInstagram()}, 5000); // insert instagram pics in news ticker
+				updateInstagram();
+				setInterval(function(){ updateInstagram()}, 120000); // insert instagram pics in news ticker
 			});
 
 			var newsticker = io.connect('http://secure-sea-3837.herokuapp.com/newsticker');
@@ -73,6 +74,7 @@
 			
 			function tick(){
 				if(newsticker_items.length > 0){
+					console.dir(newsticker_items[counter]);
 					if(newsticker_items[counter].type == "tweet"){
 						$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
 						if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
@@ -81,6 +83,7 @@
 							$("#imgdiv").html("");
 						}
 					}else if(newsticker_items[counter].type == "image"){ //instagram
+						console.log("Showing an Instagram.")
 						$("#newsticker").html("<img src='" + newsticker_items[counter].caption.profile_picture + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].caption.username + ":</b> " + newsticker_items[counter].caption.text);
 						$("#imgdiv").html("<img src='" + newsticker_items[counter].images.standard_resolution.url + "'/>");
 					}
