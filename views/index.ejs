@@ -78,14 +78,14 @@
 					if(newsticker_items[counter].type == "tweet"){
 						$('#newsticker').html("<img src='" + newsticker_items[counter].user.profile_image_url + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].user.screen_name + ":</b> " + newsticker_items[counter].text);
 						if(typeof newsticker_items[counter].entities.media != "undefined" && newsticker_items[counter].entities.media.length > 0){
-							$("#imgdiv").html("<center><img src='" + newsticker_items[counter].entities.media[0].media_url + ":large'/></center>");
+							$("#imgdiv").html("<center><img src='" + newsticker_items[counter].entities.media[0].media_url + ":large' style='opacity: 0.85;'/></center>");
 						}else{
 							$("#imgdiv").html("");
 						}
 					}else if(newsticker_items[counter].type == "image"){ //instagram
 						//console.log("Showing an Instagram.")
 						$("#newsticker").html("<img src='" + newsticker_items[counter].caption.from.profile_picture + "' width='50px' height='50px'/>&nbsp;<b>@" + newsticker_items[counter].caption.from.username + ":</b> " + newsticker_items[counter].caption.text);
-						$("#imgdiv").html("<center><img src='" + newsticker_items[counter].images.standard_resolution.url + "'/></center>");
+						$("#imgdiv").html("<center><img src='" + newsticker_items[counter].images.standard_resolution.url + "' style='opacity: 0.85;'/></center>");
 					}
 					
 					counter++;
